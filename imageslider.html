@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .slider-container {
+            position: relative;
+            width: 80%;
+            max-width: 600px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        .slider-images {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .slider-images img {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        .slider-button {
+            position: absolute;
+            top: 50%;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 50%;
+        }
+
+        .prev-button {
+            left: 10px;
+            transform: translateY(-50%);
+        }
+
+        .next-button {
+            right: 10px;
+            transform: translateY(-50%);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slider-container">
+        <div class="slider-images" id="slider-images">
+            <img src="autumn-flowers-in-bloom.webp" alt="Image 1">
+            <img src="flowers_23-2148134347.webp" alt="Image 2">
+            <img src="autumn-flowers-in-bloom.webp" alt="Image 3">
+        </div>
+        <button class="slider-button prev-button" id="prev-btn">&#10094;</button>
+        <button class="slider-button next-button" id="next-btn">&#10095;</button>
+    </div>
+
+    <script>
+       
+        const images = [
+            "autumn-flowers-in-bloom.webp",
+            "flowers_23-2148134347.webp",
+            "autumn-flowers-in-bloom.webp"
+        ];
+
+        let currentIndex = 0; 
+        const sliderImages = document.getElementById('slider-images');
+
+       
+        function updateSlider() {
+            sliderImages.style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+       
+        document.getElementById('next-btn').addEventListener('click', function () {
+            currentIndex = (currentIndex + 1) % images.length; 
+            updateSlider();
+        });
+
+        
+        document.getElementById('prev-btn').addEventListener('click', function () {
+            currentIndex = (currentIndex - 1 + images.length) % images.length; 
+            updateSlider();
+        });
+
+       
+        function initializeSlider() {
+            const sliderImagesContainer = document.getElementById('slider-images');
+            sliderImagesContainer.innerHTML = ''; 
+            images.forEach(imageUrl => {
+                const img = document.createElement('img');
+                img.src = imageUrl;
+                sliderImagesContainer.appendChild(img);
+            });
+            updateSlider(); 
+        }
+
+        initializeSlider(); 
+    </script>
+
+</body>
+</html>
